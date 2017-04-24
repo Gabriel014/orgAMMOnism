@@ -9,11 +9,20 @@ public class InstantiateObjects : MonoBehaviour {
 
     int difficulty = 0;
 
+    bool gameStarted = false, generationStarted = false;
+
     public float max, min;
 
 	// Use this for initialization
-	void Start () {
-        InvokeRepeating("DifficultyIncreaser", 0f, interval);
+	void Update () {
+
+        if (Input.GetKeyDown("space")) gameStarted = true;
+
+        if (gameStarted && !generationStarted)
+        {
+            InvokeRepeating("DifficultyIncreaser", 0f, interval);
+            generationStarted = true;
+        }
 	}
 
     void DifficultyIncreaser()

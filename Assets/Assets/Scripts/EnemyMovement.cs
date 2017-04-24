@@ -20,12 +20,20 @@ public class EnemyMovement : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        // if (collider.name == "Player") //call GameOver
+        if (collider.name == "Player" || collider.name == "Game Over Mark")
+            GameObject.Find("Main Camera").GetComponent<GameOverManager>().GameOver();
+
         if (collider.tag == "Projectile")
         {
             Destroy(collider.gameObject);
             Destroy(gameObject);
-            PlayerPrefs.SetInt("Score", PlayerPrefs.GetInt("Score", 0) + 50);
+            PlayerPrefs.SetInt("Score", PlayerPrefs.GetInt("Score", 0) + 1);
+
+            if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("HighScore"))
+            {
+                PlayerPrefs.SetInt("HighScore", PlayerPrefs.GetInt("Score"));
+            }
+
         }
     }
 }
